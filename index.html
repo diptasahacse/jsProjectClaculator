@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+        body{
+            background: #4D8AC8;
+        }
+        .clear-fix::after{
+    content: '';
+    display: table;
+    clear: both;
+    
+}
+        .main-area{
+            text-align: center;
+        }
+        .calculator-area{
+            margin: 100px auto;
+            width: 500px;
+            background: #EBF5FF;
+            padding: 15px;
+            border-radius: 10px;
+
+        }
+        .display-area{
+            text-align: right;
+            background: #CCE5FF;
+            padding: 10px;
+            border-radius: 10px;
+            
+        }
+        .button-area{
+            margin-top: 10px;
+        }
+        #calculation-text{
+            font-size: 30px;
+        }
+        #answer-value{
+            font-size: 50px;
+
+        }
+        /* button container */
+        .button-container{
+            display:grid;
+            grid-template-columns: auto auto auto auto auto;
+            grid-gap: 10px;
+        }
+        .button-item{
+            background: royalblue;
+            padding: 10px;
+            border-radius: 5px;
+            
+        }
+        .button-item:hover{
+            cursor: pointer;
+        }
+        .button-item:last-child{
+            grid-column-start: 4;
+            grid-column-end: 6;
+        }
+        .button-item:nth-child(){
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-area">
+        <div class="calculator-area clear-fix">
+            <div class="display-area">
+                <div id="answer-text">
+                    <h1 id="answer-value">0</h1>
+                </div>
+                <div id="calculation-area">
+                    <p id="calculation-text">0</p>
+
+                </div>
+            </div>
+            <div class="button-area clear-fix">
+                <div class="button-container">
+                    <div class="button-item">(</div>
+                    <div class="button-item">)</div>
+                    <div class="button-item">ans</div>
+                    <div onclick="backSpace()" class="button-item">del</div>
+                    <div onclick="clearAll()" class="button-item">clear</div>
+                    <div onclick="clickButton('7')" class="button-item">7</div>
+                    <div onclick="clickButton('8')" class="button-item">8</div>
+                    <div onclick="clickButton('9')" class="button-item">9</div>
+                    <div class="button-item">%</div>
+                    <div onclick="root()" class="button-item">root</div>
+                    <div onclick="clickButton('4')" class="button-item">4</div>
+                    <div onclick="clickButton('5')" class="button-item">5</div>
+                    <div onclick="clickButton('6')" class="button-item">6</div>
+                    <div class="button-item">x</div>
+                    <div class="button-item">/</div>
+                    <div onclick="clickButton('1')" class="button-item">1</div>
+                    <div onclick="clickButton('2')" class="button-item">2</div>
+                    <div onclick="clickButton('3')" class="button-item">3</div>
+                    <div onclick="operator('+')" class="button-item">+</div>
+                    <div onclick="operator('-')"  class="button-item">-</div>
+                    <div class="button-item">.</div>
+                    <div onclick="clickButton('0')"  class="button-item">0</div>
+                    <div class="button-item">+-</div>
+                    <div class="button-item">Enter</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function clickButton(button){
+
+            if(document.getElementById('calculation-text').innerText.length < 16){
+                    if(document.getElementById('calculation-text').innerText == '0'){
+                        var currentValue = '';
+                        document.getElementById('calculation-text').innerText = (currentValue+button);
+                    }
+                    else{
+                        var currentValue = document.getElementById('calculation-text').innerText;
+                        document.getElementById('calculation-text').innerText = currentValue+button;
+
+                    }
+            }
+        }
+        function clearAll(){
+            
+            document.getElementById('calculation-text').innerText = 0;
+            document.getElementById('answer-value').innerText = 0;
+        }
+        function backSpace(){
+            
+            var values = document.getElementById('calculation-text').innerText;
+            if(values.length == 1){
+                document.getElementById('calculation-text').innerText = 0;
+
+            }
+            else{
+                document.getElementById('calculation-text').innerText = values.slice(0, values.length-1);
+
+            }
+        }
+        function root(){
+            var value = document.getElementById('calculation-text').innerText;
+            if(value != '0'){
+                document.getElementById('answer-value').innerText = Math.pow(parseFloat(value),.5).toFixed(4);
+            }
+
+        }
+
+        function operator(value){
+            if(value == '+'){
+                var upValue = document.getElementById('answer-value').innerText;
+                if(upValue.slice(-1) == '+'){
+                    var a = upValue.slice(0, length-1);
+                    var b = document.getElementById('calculation-text').innerText;
+                    var x = parseInt(a);
+                    var y = parseInt(b);
+                    var z = x+y;
+                    document.getElementById('answer-value').innerText = z+'+';
+                    document.getElementById('calculation-text').innerText = '0';
+                }
+                else{
+                    var xxx = document.getElementById('calculation-text').innerText;
+                    document.getElementById('calculation-text').innerText = '0';
+                    document.getElementById('answer-value').innerText = xxx+ "+";
+
+                }
+                
+
+            }
+            if(value == '-'){
+                var upValue = document.getElementById('answer-value').innerText;
+                if(upValue.slice(-1) == '-'){
+                    var a = upValue.slice(0, length-1);
+                    var b = document.getElementById('calculation-text').innerText;
+                    var x = parseInt(a);
+                    var y = parseInt(b);
+                    var z = x-y;
+                    document.getElementById('answer-value').innerText = z+'-';
+                    document.getElementById('calculation-text').innerText = '0';
+                }
+                else{
+                    var xxx = document.getElementById('calculation-text').innerText;
+                    document.getElementById('calculation-text').innerText = '0';
+                    document.getElementById('answer-value').innerText = xxx+ "-";
+
+                }
+                
+
+            }
+
+        }
+    </script>
+    
+</body>
+</html>
